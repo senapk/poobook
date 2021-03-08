@@ -20,7 +20,7 @@ public class Pessoa{
 
 
         // Opção 1
-        ArrayList<String> nomes = new ArrayList<>();
+        List<String> nomes = new ArrayList<>();
         for (Pessoa pessoa : pessoas)
             if(pessoa.idade < 18)
                 nomes.add(pessoa.nome);
@@ -28,9 +28,9 @@ public class Pessoa{
         System.out.println(nomes);
 
         // Opção 2
-        pessoas.stream()
-               .filter((pessoa)->(pessoa.idade < 18))
-               .map((pessoa)->(pessoa.nome))
+        nomes = pessoas.stream()
+               .filter(pessoa->(pessoa.idade > 18))
+               .map(pessoa->(pessoa.nome))
                .collect(Collectors.toList());
 
         System.out.println(nomes);

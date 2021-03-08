@@ -17,7 +17,7 @@ for (let i = 0; i < pessoas.length; i++)
     if(pessoas[i].idade < 18)
         nomes.push(pessoas[i].nome);
         
-        // Opção 2
+// Opção 2
 nomes = pessoas.filter(pessoa => pessoa.idade < 18)
                .map(pessoa => pessoa.nome)
         

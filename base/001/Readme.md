@@ -1,5 +1,4 @@
 # Labmda e stream
-
 <!--TOC_BEGIN-->
 - [Referências](#referências)
 - [Funções lambda](#funções-lambda)
@@ -13,7 +12,11 @@
     - [Lambda Implícitos](#lambda-implícitos)
     - [Mostrando os tipos](#mostrando-os-tipos)
 - [Classes anônimas e funções Lambda](#classes-anônimas-e-funções-lambda)
-    - [Exemplo do rinaldo.dev do SAM](#exemplo-do-rinaldodev-do-sam)
+    - [Exemplo do rinaldo.dev sobre o SAM](#exemplo-do-rinaldodev-sobre-o-sam)
+- [Mais sobre Streams from infoq](#mais-sobre-streams-from-infoq)
+    - [Iniciando uma stream](#iniciando-uma-stream)
+    - [Operações de finalização de Stream](#operações-de-finalização-de-stream)
+    - [Mais exemplos](#mais-exemplos)
 <!--TOC_END-->
 
 ## Referências
@@ -53,26 +56,26 @@ System.out.print(function.apply(2));
 <!--ADD pessoas.py py-->
 ```py
 # pessoas.py
+from typing import List
 
 class Pessoa:
     def __init__(self, nome, idade):
         self.nome = nome
         self.idade = idade
 
-pessoas = [Pessoa("David", 15), Pessoa("Carla", 20), 
+pessoas: List[Pessoa] = [Pessoa("David", 15), Pessoa("Carla", 20), 
            Pessoa("Elias", 12), Pessoa("Amora", 10), 
            Pessoa("Celia", 13), Pessoa("Josue", 30)]
 
 # Usando programação interativa
-nomes = []
+nomes: List[str] = []
 for pessoa in pessoas:
-    if pessoa.idade < 18:
-        nomes.append(pessoa.nome)
+    if pessoa.idade < 18: # filtragem
+        nomes.append(pessoa.nome) # mapeamento
+print(nomes)
 
 # Usando Listas de Compreensão
-# print([pessoa.nome for pessoa in pessoas if pessoa.idade < 18])
-
-print(nomes)
+print([pessoa.nome for pessoa in pessoas if pessoa.idade > 18])
 ```
 <!--ADD_END-->
 
@@ -99,7 +102,7 @@ for (let i = 0; i < pessoas.length; i++)
     if(pessoas[i].idade < 18)
         nomes.push(pessoas[i].nome);
         
-        // Opção 2
+// Opção 2
 nomes = pessoas.filter(pessoa => pessoa.idade < 18)
                .map(pessoa => pessoa.nome)
         
@@ -133,7 +136,7 @@ public class Pessoa{
 
 
         // Opção 1
-        ArrayList<String> nomes = new ArrayList<>();
+        List<String> nomes = new ArrayList<>();
         for (Pessoa pessoa : pessoas)
             if(pessoa.idade < 18)
                 nomes.add(pessoa.nome);
@@ -141,9 +144,9 @@ public class Pessoa{
         System.out.println(nomes);
 
         // Opção 2
-        pessoas.stream()
-               .filter((pessoa)->(pessoa.idade < 18))
-               .map((pessoa)->(pessoa.nome))
+        nomes = pessoas.stream()
+               .filter(pessoa->(pessoa.idade > 18))
+               .map(pessoa->(pessoa.nome))
                .collect(Collectors.toList());
 
         System.out.println(nomes);
@@ -222,43 +225,43 @@ public class TesteLambda {
 
 <!--ADD Anonima.java java-->
 ```java
-interface Assalariado{
-    public String trabalhar();
-}
+// interface Assalariado{
+//     public String trabalhar();
+// }
 
-class Operario implements Assalariado{
-    public String trabalhar() {
-        return "vamos pra labuta";
-    }
-}
+// class Operario implements Assalariado{
+//     public String trabalhar() {
+//         return "vamos pra labuta";
+//     }
+// }
 
-public class Anonima{
+// public class Anonima{
 
-    public static void enviarParaJornada(Assalariado trabalhador){
-        System.out.println(trabalhador.trabalhar());
-    }
-    public static void main(String[] args) {
+//     public static void enviarParaJornada(Assalariado trabalhador){
+//         System.out.println(trabalhador.trabalhar());
+//     }
+//     public static void main(String[] args) {
         
-        Assalariado rapido = new Assalariado(){
-            public String trabalhar() {
-                return "eh pra jah";
-            }
-        };
-        enviarParaJornada(rapido);
+//         Assalariado rapido = new Assalariado(){
+//             public String trabalhar() {
+//                 return "eh pra jah";
+//             }
+//         };
+//         enviarParaJornada(rapido);
         
 
-        Assalariado soldado = new Operario(){
-            public String trabalhar() {
-                return super.trabalhar() + " sim Senhor!";
-            }
-        };
-        enviarParaJornada(soldado);  
+//         Assalariado soldado = new Operario(){
+//             public String trabalhar() {
+//                 return super.trabalhar() + " sim Senhor!";
+//             }
+//         };
+//         enviarParaJornada(soldado);  
     
         
-        enviarParaJornada(()->("tô esperando a coragem chegar"));
-    }
+//         enviarParaJornada(()->("tô esperando a coragem chegar"));
+//     }
     
-}
+// }
 ```
 <!--ADD_END-->
 
@@ -342,7 +345,7 @@ Exemplo 2. Procurar as palavras com tamanho par na lista:
 ```java
 List<String> output = wordList.stream().
 //Seleciona somente as palavras com tamanho par.
-filter(w -> (w.length() & 1 == 0). 
+filter(w -> (w.length() % 2 == 0). 
 collect(Collectors.toList());
 ```
 
