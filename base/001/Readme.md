@@ -1,4 +1,4 @@
-# Labmda e stream
+# Lambda, stream, e classes anônimas
 <!--TOC_BEGIN-->
 - [Referências](#referências)
 - [Funções lambda](#funções-lambda)
